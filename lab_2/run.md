@@ -1,21 +1,49 @@
 # Сборка
-- Windows:  cmake -S . -B build-windows
-            cmake --build build-windows --config Release
-- Linux:    cmake -S . -B build-linux
-            cmake --build build-linux
 
-# Бинарники:
-- Windows:  ./build-windows/bin/Release/parent.exe
-            ./build-windows/bin/Release/child.exe
-- Linux:    ./build-linux/bin/parent
-            ./build-linux/bin/child
+## Windows
 
-# Запуск из папки с бинарниками:
-- Windows:  cd build-windows/bin/Release
-            ./parent.exe  
-- Linux:    cd build-linux/bin
-            ./parent  
+```sh
+cmake -S . -B build-windows
+cmake --build build-windows --config Release
+```
 
-# Скрыть ошибки/логи: 
-- Windows: ./parent 2>$nul
-- Linux: ./parent 2>/dev/null
+## Linux
+
+```sh
+cmake -S . -B build-linux
+cmake --build build-linux
+```
+
+# Бинарники
+
+- Windows: `build-windows/bin/Release/parent.exe`, `build-windows/bin/Release/child.exe`
+- Linux: `build-linux/bin/parent`, `build-linux/bin/child`
+
+# Запуск из папки с бинарниками
+
+## Windows
+
+```sh
+cd build-windows/bin/Release
+./parent.exe
+```
+
+## Linux
+
+```sh
+cd build-linux/bin
+./parent
+```
+
+# Скрыть сообщения программ
+
+```sh
+# Windows (PowerShell)
+./parent 2>$null
+
+# Windows (cmd.exe)
+./parent 2>nul
+
+# Linux
+./parent 2>/dev/null
+```
