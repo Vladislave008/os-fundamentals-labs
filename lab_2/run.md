@@ -37,6 +37,13 @@ cd build-linux/bin
 ```
 - Ctrl+D для EOF
 
+## Linux: трассировка системных вызовов (strace)
+
+```sh
+cd build-linux/bin
+strace -f -o strace.txt ./parent
+```
+
 # Скрыть сообщения программ
 
 ```sh
