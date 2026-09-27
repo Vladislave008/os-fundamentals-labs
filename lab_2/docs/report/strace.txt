@@ -1,0 +1,205 @@
+﻿1223  execve("./parent", ["./parent"], 0x7ffc8ba1f408 /* 35 vars */) = 0
+1223  brk(NULL)                         = 0x5d6cb9ea1000
+1223  mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x71080405d000
+1223  access("/etc/ld.so.preload", R_OK) = -1 ENOENT (No such file or directory)
+1223  openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+1223  fstat(3, {st_mode=S_IFREG|0644, st_size=18759, ...}) = 0
+1223  mmap(NULL, 18759, PROT_READ, MAP_PRIVATE, 3, 0) = 0x710804058000
+1223  close(3)                          = 0
+1223  openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+1223  read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0p\236\2\0\0\0\0\0"..., 832) = 832
+1223  pread64(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 840, 64) = 840
+1223  fstat(3, {st_mode=S_IFREG|0755, st_size=1995216, ...}) = 0
+1223  pread64(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 840, 64) = 840
+1223  mmap(NULL, 2047568, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x710803e64000
+1223  mmap(0x710803e8c000, 1454080, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x28000) = 0x710803e8c000
+1223  mmap(0x710803fef000, 352256, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x18b000) = 0x710803fef000
+1223  mmap(0x710804045000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1e0000) = 0x710804045000
+1223  mmap(0x71080404b000, 52816, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x71080404b000
+1223  close(3)                          = 0
+1223  mmap(NULL, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x710803e61000
+1223  arch_prctl(ARCH_SET_FS, 0x710803e61740) = 0
+1223  set_tid_address(0x710803e61a10)   = 1223
+1223  set_robust_list(0x710803e61a20, 24) = 0
+1223  rseq(0x710803e61680, 0x20, 0, 0x53053053) = 0
+1223  mprotect(0x710804045000, 16384, PROT_READ) = 0
+1223  mprotect(0x5d6cb521e000, 4096, PROT_READ) = 0
+1223  mprotect(0x710804093000, 8192, PROT_READ) = 0
+1223  prlimit64(0, RLIMIT_STACK, NULL, {rlim_cur=8192*1024, rlim_max=RLIM64_INFINITY}) = 0
+1223  munmap(0x710804058000, 18759)     = 0
+1223  fstat(1, {st_mode=S_IFCHR|0620, st_rdev=makedev(0x88, 0), ...}) = 0
+1223  getrandom("\xcf\xf7\x95\xf1\xda\x76\x94\xc9", 8, GRND_NONBLOCK) = 8
+1223  brk(NULL)                         = 0x5d6cb9ea1000
+1223  brk(0x5d6cb9ec2000)               = 0x5d6cb9ec2000
+1223  write(1, "Enter file name for child: ", 27) = 27
+1223  fstat(0, {st_mode=S_IFCHR|0620, st_rdev=makedev(0x88, 0), ...}) = 0
+1223  read(0, "test_strace\n", 1024)    = 12
+1223  pipe2([3, 4], 0)                  = 0
+1223  pipe2([5, 6], 0)                  = 0
+1223  rt_sigaction(SIGPIPE, {sa_handler=SIG_IGN, sa_mask=[], sa_flags=SA_RESTORER|SA_INTERRUPT|SA_NODEFER|SA_RESETHAND|0xffffffff00000000, sa_restorer=0x710803ea3df0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+1223  rt_sigprocmask(SIG_BLOCK, ~[], [], 8) = 0
+1223  clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x710803e61a10) = 1303
+1303  set_robust_list(0x710803e61a20, 24 <unfinished ...>
+1223  rt_sigprocmask(SIG_SETMASK, [],  <unfinished ...>
+1303  <... set_robust_list resumed>)    = 0
+1223  <... rt_sigprocmask resumed>NULL, 8) = 0
+1303  rt_sigprocmask(SIG_SETMASK, [],  <unfinished ...>
+1223  close(3 <unfinished ...>
+1303  <... rt_sigprocmask resumed>NULL, 8) = 0
+1223  <... close resumed>)              = 0
+1303  dup2(3, 0 <unfinished ...>
+1223  close(6 <unfinished ...>
+1303  <... dup2 resumed>)               = 0
+1223  <... close resumed>)              = 0
+1303  dup2(6, 1 <unfinished ...>
+1223  getpid( <unfinished ...>
+1303  <... dup2 resumed>)               = 1
+1223  <... getpid resumed>)             = 1223
+1303  close(3 <unfinished ...>
+1223  write(2, "[parent pid=1223] child started,"..., 42 <unfinished ...>
+1303  <... close resumed>)              = 0
+1223  <... write resumed>)              = 42
+1303  close(4 <unfinished ...>
+1223  write(1, "Enter any number of float number"..., 61 <unfinished ...>
+1303  <... close resumed>)              = 0
+1223  <... write resumed>)              = 61
+1303  close(5 <unfinished ...>
+1223  write(1, "Empty line or EOF to finish.\n", 29 <unfinished ...>
+1303  <... close resumed>)              = 0
+1223  <... write resumed>)              = 29
+1303  close(6 <unfinished ...>
+1223  write(1, "> ", 2 <unfinished ...>
+1303  <... close resumed>)              = 0
+1223  <... write resumed>)              = 2
+1303  execve("./child", ["child", "test_strace"], 0x7fffbb384808 /* 35 vars */ <unfinished ...>
+1223  read(0,  <unfinished ...>
+1303  <... execve resumed>)             = 0
+1303  brk(NULL)                         = 0x5da3a8c15000
+1303  mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x75502d4e5000
+1303  access("/etc/ld.so.preload", R_OK) = -1 ENOENT (No such file or directory)
+1303  openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+1303  fstat(3, {st_mode=S_IFREG|0644, st_size=18759, ...}) = 0
+1303  mmap(NULL, 18759, PROT_READ, MAP_PRIVATE, 3, 0) = 0x75502d4e0000
+1303  close(3)                          = 0
+1303  openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+1303  read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0p\236\2\0\0\0\0\0"..., 832) = 832
+1303  pread64(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 840, 64) = 840
+1303  fstat(3, {st_mode=S_IFREG|0755, st_size=1995216, ...}) = 0
+1303  pread64(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 840, 64) = 840
+1303  mmap(NULL, 2047568, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x75502d2ec000
+1303  mmap(0x75502d314000, 1454080, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x28000) = 0x75502d314000
+1303  mmap(0x75502d477000, 352256, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x18b000) = 0x75502d477000
+1303  mmap(0x75502d4cd000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1e0000) = 0x75502d4cd000
+1303  mmap(0x75502d4d3000, 52816, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x75502d4d3000
+1303  close(3)                          = 0
+1303  mmap(NULL, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x75502d2e9000
+1303  arch_prctl(ARCH_SET_FS, 0x75502d2e9740) = 0
+1303  set_tid_address(0x75502d2e9a10)   = 1303
+1303  set_robust_list(0x75502d2e9a20, 24) = 0
+1303  rseq(0x75502d2e9680, 0x20, 0, 0x53053053) = 0
+1303  mprotect(0x75502d4cd000, 16384, PROT_READ) = 0
+1303  mprotect(0x5da39960c000, 4096, PROT_READ) = 0
+1303  mprotect(0x75502d51b000, 8192, PROT_READ) = 0
+1303  prlimit64(0, RLIMIT_STACK, NULL, {rlim_cur=8192*1024, rlim_max=RLIM64_INFINITY}) = 0
+1303  munmap(0x75502d4e0000, 18759)     = 0
+1303  getpid()                          = 1303
+1303  write(2, "[child pid=1303] started, file='"..., 45) = 45
+1303  getrandom("\xd7\xa4\x25\x0b\x9e\xb2\x4e\x6a", 8, GRND_NONBLOCK) = 8
+1303  brk(NULL)                         = 0x5da3a8c15000
+1303  brk(0x5da3a8c36000)               = 0x5da3a8c36000
+1303  openat(AT_FDCWD, "test_strace", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 3
+1303  fstat(0, {st_mode=S_IFIFO|0600, st_size=0, ...}) = 0
+1303  read(0,  <unfinished ...>
+1223  <... read resumed>"1 2 3\n", 1024) = 6
+1223  write(4, "\0\0\200?", 4)          = 4
+1303  <... read resumed>"\0\0\200?", 4096) = 4
+1223  getpid( <unfinished ...>
+1303  getpid( <unfinished ...>
+1223  <... getpid resumed>)             = 1223
+1303  <... getpid resumed>)             = 1303
+1223  write(2, "[parent pid=1223] sent 1.000\n", 29 <unfinished ...>
+1303  write(2, "[child pid=1303] got 1.000, runn"..., 48 <unfinished ...>
+1223  <... write resumed>)              = 29
+1303  <... write resumed>)              = 48
+1223  write(4, "\0\0\0@", 4 <unfinished ...>
+1303  read(0,  <unfinished ...>
+1223  <... write resumed>)              = 4
+1303  <... read resumed>"\0\0\0@", 4096) = 4
+1223  getpid( <unfinished ...>
+1303  getpid( <unfinished ...>
+1223  <... getpid resumed>)             = 1223
+1303  <... getpid resumed>)             = 1303
+1223  write(2, "[parent pid=1223] sent 2.000\n", 29 <unfinished ...>
+1303  write(2, "[child pid=1303] got 2.000, runn"..., 48 <unfinished ...>
+1223  <... write resumed>)              = 29
+1303  <... write resumed>)              = 48
+1223  write(4, "\0\0@@", 4 <unfinished ...>
+1303  read(0,  <unfinished ...>
+1223  <... write resumed>)              = 4
+1303  <... read resumed>"\0\0@@", 4096) = 4
+1223  getpid( <unfinished ...>
+1303  getpid( <unfinished ...>
+1223  <... getpid resumed>)             = 1223
+1303  <... getpid resumed>)             = 1303
+1223  write(2, "[parent pid=1223] sent 3.000\n", 29 <unfinished ...>
+1303  write(2, "[child pid=1303] got 3.000, runn"..., 48 <unfinished ...>
+1223  <... write resumed>)              = 29
+1303  <... write resumed>)              = 48
+1223  getpid( <unfinished ...>
+1303  read(0,  <unfinished ...>
+1223  <... getpid resumed>)             = 1223
+1223  write(2, "[parent pid=1223] line done: 3 n"..., 41) = 41
+1223  write(1, "> ", 2)                 = 2
+1223  read(0, "0\n", 1024)              = 2
+1223  write(4, "\0\0\0\0", 4)           = 4
+1303  <... read resumed>"\0\0\0\0", 4096) = 4
+1223  getpid( <unfinished ...>
+1303  getpid( <unfinished ...>
+1223  <... getpid resumed>)             = 1223
+1303  <... getpid resumed>)             = 1303
+1223  write(2, "[parent pid=1223] sent 0.000\n", 29 <unfinished ...>
+1303  write(2, "[child pid=1303] got 0.000, runn"..., 48 <unfinished ...>
+1223  <... write resumed>)              = 29
+1303  <... write resumed>)              = 48
+1223  getpid( <unfinished ...>
+1303  read(0,  <unfinished ...>
+1223  <... getpid resumed>)             = 1223
+1223  write(2, "[parent pid=1223] line done: 1 n"..., 41) = 41
+1223  write(1, "> ", 2)                 = 2
+1223  read(0, "\n", 1024)               = 1
+1223  close(4)                          = 0
+1303  <... read resumed>"", 4096)       = 0
+1223  write(2, "[parent] pipe1 closed, waiting f"..., 52 <unfinished ...>
+1303  getpid( <unfinished ...>
+1223  <... write resumed>)              = 52
+1303  <... getpid resumed>)             = 1303
+1223  read(5,  <unfinished ...>
+1303  write(2, "[child pid=1303] EOF on stdin, 4"..., 49) = 49
+1303  fstat(3, {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+1303  write(3, "Sum of 4 numbers = 6.000000\n", 28) = 28
+1303  close(3)                          = 0
+1303  getpid()                          = 1303
+1303  write(2, "[child pid=1303] result written "..., 49) = 49
+1303  fstat(1, {st_mode=S_IFIFO|0600, st_size=0, ...}) = 0
+1303  write(1, "\0\0\300@", 4 <unfinished ...>
+1223  <... read resumed>"\0\0\300@", 4) = 4
+1303  <... write resumed>)              = 4
+1223  getpid( <unfinished ...>
+1303  getpid( <unfinished ...>
+1223  <... getpid resumed>)             = 1223
+1303  <... getpid resumed>)             = 1303
+1223  write(2, "[parent pid=1223] child reported"..., 45 <unfinished ...>
+1303  write(2, "[child pid=1303] exiting\n", 25 <unfinished ...>
+1223  <... write resumed>)              = 45
+1303  <... write resumed>)              = 25
+1223  close(5 <unfinished ...>
+1303  exit_group(0 <unfinished ...>
+1223  <... close resumed>)              = 0
+1303  <... exit_group resumed>)         = ?
+1223  wait4(1303,  <unfinished ...>
+1303  +++ exited with 0 +++
+1223  <... wait4 resumed>[{WIFEXITED(s) && WEXITSTATUS(s) == 0}], 0, NULL) = 1303
+1223  --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1303, si_uid=1000, si_status=0, si_utime=0, si_stime=0} ---
+1223  write(2, "[parent] child exited with code "..., 34) = 34
+1223  exit_group(0)                     = ?
+1223  +++ exited with 0 +++

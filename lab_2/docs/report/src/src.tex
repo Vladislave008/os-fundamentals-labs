@@ -1,0 +1,93 @@
+\section{Метод решения}
+
+Логика программы разделена на три независимых уровня:
+\begin{enumerate}
+  \item \emph{общий интерфейс} \texttt{src/os\_api.h} --- абстракции \texttt{os\_pipe} и
+    \texttt{os\_process}, а также единый набор функций для создания и использования каналов и
+    процессов;
+  \item \emph{платформозависимые реализации} \texttt{src/os\_api\_win.c} (Win32 API) и
+    \texttt{src/os\_api\_posix.c} (POSIX API) --- здесь находятся все системные вызовы, условная
+    компиляция отсутствует, выбор файла выполняется в \texttt{CMakeLists.txt};
+  \item \emph{прикладной уровень} \texttt{app/parent.c} и \texttt{app/child.c} --- вызывают только
+    функции единого API, никаких системных вызовов в коде приложений нет.
+\end{enumerate}
+
+Алгоритм работы родительского процесса:
+\begin{enumerate}
+  \item создаются два канала: \texttt{in} (родитель $\rightarrow$ ребёнок) и \texttt{out}
+    (ребёнок $\rightarrow$ родитель);
+  \item через \texttt{os\_process\_spawn} запускается \texttt{child} с именем файла-отчёта;
+    обёртка самостоятельно подключает каналы к стандартному вводу/выводу дочернего процесса и
+    закрывает ненужные в текущем процессе концы каналов;
+  \item в цикле читаются строки со стандартного ввода, числа с плавающей запятой извлекаются и
+    записываются в канал \texttt{in};
+  \item по окончании ввода закрывается записывающий конец канала \texttt{in} --- это сигнал
+    \texttt{EOF} для дочернего процесса;
+  \item родитель читает итоговую сумму из канала \texttt{out}, закрывает каналы, ожидает
+    завершения \texttt{child} (\texttt{os\_process\_wait}) и закрывает дескриптор процесса.
+\end{enumerate}
+
+Дочерний процесс получает числа через стандартный ввод, суммирует их, записывает строку отчёта в
+заданный файл и передаёт сумму обратно через стандартный вывод. Выбор низкоуровневых деталей
+(преобразование argv в командную строку Windows, добавление \texttt{.exe}, префикс \texttt{./}
+на POSIX и т.\,п.) полностью инкапсулирован в реализации обёртки.
+
+\section{Описание программы}
+
+\textbf{Разделение по файлам:}
+
+\begin{center}
+\begin{tabular}{ll}
+\texttt{src/os\_api.h}       & единый интерфейс (типы, объявления функций) \\
+\texttt{src/os\_api\_win.c}  & реализация для Windows (Win32 API) \\
+\texttt{src/os\_api\_posix.c}& реализация для Linux (POSIX API) \\
+\texttt{app/parent.c}        & родительский процесс \\
+\texttt{app/child.c}         & дочерний процесс \\
+\texttt{CMakeLists.txt}      & выбор реализации, сборка обоих исполняемых файлов \\
+\end{tabular}
+\end{center}
+
+\textbf{Основные типы данных:}
+\begin{itemize}
+  \item \texttt{os\_pipe} --- два дескриптора (\texttt{read}, \texttt{write}) типа
+    \texttt{uintptr\_t}; значение \texttt{OS\_INVALID} означает закрытый/несозданный дескриптор;
+  \item \texttt{os\_process} --- дескриптор процесса (\texttt{proc}) и его идентификатор
+    (\texttt{pid}, используется для логирования).
+\end{itemize}
+
+\textbf{Функции единого API и их семантика:}
+
+\begin{center}
+\begin{tabular}{ll}
+\texttt{os\_self\_pid()}               & PID текущего процесса \\
+\texttt{os\_pipe\_create()}           & создание анонимного канала \\
+\texttt{os\_pipe\_close\_read/write()} & закрытие конца канала \\
+\texttt{os\_pipe\_read()/write()}      & чтение/запись данных через канал \\
+\texttt{os\_process\_spawn()}         & запуск дочернего процесса с перенаправлением каналов \\
+\texttt{os\_process\_pid()}           & PID запущенного процесса \\
+\texttt{os\_process\_wait()}          & ожидание завершения процесса и получение кода выхода \\
+\texttt{os\_process\_close()}         & освобождение ресурсов процесса \\
+\end{tabular}
+\end{center}
+
+Все функции возвращают \texttt{0} при успехе и \texttt{-1} при ошибке
+(исключение --- \texttt{os\_pipe\_read}: \texttt{1} -- прочитано ровно \texttt{size} байт,
+\texttt{0} -- \texttt{EOF}).
+
+\textbf{Используемые системные вызовы:}
+
+\begin{center}
+\begin{tabular}{p{0.4\textwidth}p{0.5\textwidth}}
+\textbf{POSIX (Linux)} & \textbf{Win32 (Windows)} \\
+\texttt{pipe, getpid, read, write, close} & \texttt{CreatePipe, GetCurrentProcessId, ReadFile, WriteFile, CloseHandle, SetHandleInformation} \\
+\texttt{fork, dup2, execv, waitpid}       & \texttt{CreateProcessW, WaitForSingleObject, GetExitCodeProcess} \\
+\end{tabular}
+\end{center}
+
+\textbf{Обработка ошибок:} каждая платформозависимая функция при сбое формирует диагностическое
+сообщение \texttt{report()}: на POSIX используются \texttt{errno} и \texttt{strerror()}, на Windows
+--- \texttt{GetLastError()} и \texttt{FormatMessageA()}. Приложение анализирует коды возврата
+функций API: любая ошибка приводит к коду возврата процесса \texttt{1}, при этом ресурсы (каналы и
+дескриптор процесса) освобождаются всегда. Для предотвращения гибели родительского процесса от
+сигнала \texttt{SIGPIPE} при записи в уже закрытый канал в POSIX-реализации сигнал игнорируется, а
+ошибка обрабатывается штатно через \texttt{EPIPE}.

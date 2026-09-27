@@ -1,0 +1,84 @@
+\section{Исходная программа}
+
+Сборка и запуск:
+\begin{itemize}
+  \item Windows: \texttt{cmake -S . -B build-windows \&\& cmake --build build-windows}, запуск
+    \texttt{./build-windows/bin/Release/parent.exe} из папки с \texttt{child.exe};
+  \item Linux: \texttt{cmake -S . -B build-linux \&\& cmake --build build-linux}, запуск
+    \texttt{./build-linux/bin/parent} из папки с \texttt{child};
+  \item файл с исходными текстами содержит папки \texttt{src}, \texttt{app} и корневой
+    \texttt{CMakeLists.txt}.
+\end{itemize}
+
+Единый интерфейс:
+
+\begin{center}
+\lstinputlisting[language=C,caption=src/os\_api.h,captionpos=b]{inc/os_api.h}
+\end{center}
+
+Реализация для Windows:
+
+\begin{center}
+\lstinputlisting[language=C,caption=src/os\_api\_win.c,captionpos=b]{inc/os_api_win.c}
+\end{center}
+
+Реализация для Linux:
+
+\begin{center}
+\lstinputlisting[language=C,caption=src/os\_api\_posix.c,captionpos=b]{inc/os_api_posix.c}
+\end{center}
+
+Родительский процесс:
+
+\begin{center}
+\lstinputlisting[language=C,caption=app/parent.c,captionpos=b]{inc/parent.c}
+\end{center}
+
+Дочерний процесс:
+
+\begin{center}
+\lstinputlisting[language=C,caption=app/child.c,captionpos=b]{inc/child.c}
+\end{center}
+
+Файл сборки:
+
+\begin{center}
+\lstinputlisting[language=C,caption=CMakeLists.txt,captionpos=b]{inc/CMakeLists.txt}
+\end{center}
+
+Ниже приведены ключевые системные вызовы родительского процесса под Linux (полная трасса ---
+\texttt{strace -f -o strace.txt ./parent}, итог сохранён в \texttt{strace.txt}):
+\begin{lstlisting}[language=C,caption=strace (fragment),captionpos=b]
+execve("./parent", ["./parent"], ...) = 0
+pipe2([3, 4], 0) = 0                          // pipe: in  = [3, 4]
+pipe2([5, 6], 0) = 0                          // pipe: out = [5, 6]
+rt_sigaction(SIGPIPE, {sa_handler=SIG_IGN, ...}, ...) = 0
+clone(child_stack=NULL, flags=...|SIGCHLD, ...) = 1303 // fork()
+close(3) = 0                                  // parent: in.read
+close(6) = 0                                  // parent: out.write
+  dup2(3, 0) = 0                              // child: stdin  <- in.read
+  dup2(6, 1) = 1                              // child: stdout <- out.write
+  close(4) = 0
+  close(5) = 0
+  execve("./child", ["child", "test_strace"], ...) = 0
+write(4, <1.0f = 0x3F800000>, 4) = 4          // parent: float 1.0 -> in.write
+read(3, <1.0f = 0x3F800000>, 4096) = 4        // child:  reads 1.0
+write(4, <2.0f = 0x40000000>, 4) = 4          // parent: float 2.0 -> in.write
+read(3, <2.0f = 0x40000000>, 4096) = 4        // child:  reads 2.0
+write(4, <3.0f = 0x40400000>, 4) = 4          // parent: float 3.0 -> in.write
+read(3, <3.0f = 0x40400000>, 4096) = 4        // child:  reads 3.0
+write(4, <0.0f = 0x00000000>, 4) = 4          // parent: float 0.0 -> in.write
+read(3, <0.0f = 0x00000000>, 4096) = 4        // child:  reads 0.0
+close(4) = 0                                  // parent: EOF for child
+read(3, "", 4096) = 0                         // child:  sees EOF
+write(1, <6.0f = 0x40C00000>, 4) = 4          // child:  sum 6.0 -> stdout
+read(5, <6.0f = 0x40C00000>, 4) = 4           // parent: reads sum
+wait4(1303, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], 0, NULL) = 1303
+exit_group(0) = ?
+\end{lstlisting}
+Трассировка подтверждает описанный ход работы: создание двух каналов (\texttt{pipe2}), подавление
+\texttt{SIGPIPE} (\texttt{rt\_sigaction}), запуск дочернего процесса (\texttt{clone}), подключение
+каналов к стандартному вводу/выводу (\texttt{dup2}) с последующим \texttt{execve("./child")},
+передачу чисел и итоговой суммы (4 байта в младшей части типа \texttt{float}), корректную передачу
+\texttt{EOF} путём закрытия записывающего конца (\texttt{close(4)} $\rightarrow$ \texttt{read = 0})
+и ожидание завершения процесса (\texttt{wait4}) с кодом выхода \texttt{0}.
