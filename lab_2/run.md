@@ -1,16 +1,17 @@
 # Сборка
 - Windows:  cmake -S . -B build-windows
-            cmake --build build-windows
-- Linux:    cmake --build build-linux
-            cmake -S . -B build-linux
+            cmake --build build-windows --config Release
+- Linux:    cmake -S . -B build-linux
+            cmake --build build-linux
+
 # Бинарники:
-- Windows:  ./build-windows/bin/Debug/parent.exe
-            ./build-windows/bin/Debug/child.exe
+- Windows:  ./build-windows/bin/Release/parent.exe
+            ./build-windows/bin/Release/child.exe
 - Linux:    ./build-linux/bin/parent
             ./build-linux/bin/child
 
 # Запуск из папки с бинарниками:
-- Windows:  cd build-windows/bin/Debug
+- Windows:  cd build-windows/bin/Release
             ./parent.exe  
 - Linux:    cd build-linux/bin
             ./parent  

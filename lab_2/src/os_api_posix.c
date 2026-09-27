@@ -1,6 +1,7 @@
 #include "os_api.h"
 
 #include <errno.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,6 +14,15 @@
 static void report(const char *msg)
 {
     fprintf(stderr, "[os_api:%s] errno %d: %s\n", msg, errno, strerror(errno));
+}
+
+static void ignore_sigpipe(void)
+{
+    static int done = 0;
+    if (!done) {
+        signal(SIGPIPE, SIG_IGN);
+        done = 1;
+    }
 }
 
 unsigned long os_self_pid(void)
@@ -89,6 +99,8 @@ int os_pipe_write(os_pipe *p, const void *buf, size_t size)
 int os_process_spawn(os_process *out, const char *const argv[],
                      os_pipe *in, os_pipe *out_pipe)
 {
+    ignore_sigpipe();
+
     int in_r = (int)in->read;
     int in_w = (int)in->write;
     int out_r = (int)out_pipe->read;
