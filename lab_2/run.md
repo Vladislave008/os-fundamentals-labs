@@ -27,6 +27,7 @@ cmake --build build-linux
 cd build-windows/bin/Release
 ./parent.exe
 ```
+- Ctrl+Z для EOF
 
 ## Linux
 
@@ -34,6 +35,7 @@ cd build-windows/bin/Release
 cd build-linux/bin
 ./parent
 ```
+- Ctrl+D для EOF
 
 # Скрыть сообщения программ
 
