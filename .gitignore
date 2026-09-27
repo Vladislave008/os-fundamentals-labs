@@ -13,3 +13,10 @@
 **/*.o
 **/*.obj
 **/*.exe
+
+# LaTeX
+**/*.aux
+**/*.out
+**/*.log
+**/*.fls
+**/*.fdb_latexmk
