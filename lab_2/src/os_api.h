@@ -30,7 +30,7 @@ int os_process_spawn(os_process *out, const char *const argv[],
     argv[0] - executable file name,
     argv[1...n-1] - args for executable
     argv[n] - NULL
-    0 = успех, -1 = ошибка. 
+    0 - success, -1 - error. 
 */
 
 unsigned long os_process_pid(const os_process *p);
@@ -38,7 +38,7 @@ unsigned long os_process_pid(const os_process *p);
 int os_process_wait(os_process *p, int *exit_code);
 /*  
     wait until process ends; 
-    0 - success успех, -1 - error
+    0 - success, -1 - error
 */
 
 int os_process_close(os_process *p); // clear finished process resources; 0 - success, -1 - error
