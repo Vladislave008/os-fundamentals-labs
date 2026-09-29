@@ -1,7 +1,8 @@
 filename=report
 
 pdf:
-	pdflatex ${filename}.tex
+	xelatex ${filename}.tex
+	xelatex ${filename}.tex
 
 text: html
 	html2text -width 100 -style pretty ${filename}/${filename}.html | sed -n '/./,$$p' | head -n-2 >${filename}.txt

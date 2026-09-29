@@ -31,8 +31,8 @@ else()
     message(FATAL_ERROR "Unsupported platform")
 endif()
 
-add_executable(parent app/parent.c)
+add_executable(parent src/app/parent.c)
 target_link_libraries(parent PRIVATE os_api)
 
-add_executable(child app/child.c)
+add_executable(child src/app/child.c)
 target_link_libraries(child PRIVATE os_api)

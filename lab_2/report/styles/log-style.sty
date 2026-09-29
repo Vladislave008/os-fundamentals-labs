@@ -1,5 +1,3 @@
-\usepackage[utf8]{inputenc}
-\usepackage[T2B]{fontenc}
 \usepackage[english,russian]{babel}
 
 \usepackage{geometry}
@@ -17,8 +15,10 @@
 
 \usepackage{nopageno}
 
-\usepackage{tempora}
-\renewcommand{\ttdefault}{cmtt}
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX}
+\setmainfont{Times New Roman}
+\setmonofont{Courier New}
 
 \usepackage{titlesec}
 \titleformat*{\section}{\large\bfseries}
@@ -57,9 +57,7 @@
 	columns=fullflexible,
 	flexiblecolumns,
 	numbers=left,
-	numberstyle={\footnotesize},
-	extendedchars,
-	inputencoding=utf8}
+	numberstyle={\footnotesize}}
 
 \def\@xobeysp{ }
 \def\verbatim@processline{\hspace{1.2cm}\raggedright\the\verbatim@line\par}

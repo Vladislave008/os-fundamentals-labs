@@ -8,7 +8,7 @@
   \item \emph{платформозависимые реализации} \texttt{src/os\_api\_win.c} (Win32 API) и
     \texttt{src/os\_api\_posix.c} (POSIX API) --- здесь находятся все системные вызовы, условная
     компиляция отсутствует, выбор файла выполняется в \texttt{CMakeLists.txt};
-  \item \emph{прикладной уровень} \texttt{app/parent.c} и \texttt{app/child.c} --- вызывают только
+  \item \emph{прикладной уровень} \texttt{src/app/parent.c} и \texttt{src/app/child.c} --- вызывают только
     функции единого API, никаких системных вызовов в коде приложений нет.
 \end{enumerate}
 
@@ -41,8 +41,8 @@
 \texttt{src/os\_api.h}       & единый интерфейс (типы, объявления функций) \\
 \texttt{src/os\_api\_win.c}  & реализация для Windows (Win32 API) \\
 \texttt{src/os\_api\_posix.c}& реализация для Linux (POSIX API) \\
-\texttt{app/parent.c}        & родительский процесс \\
-\texttt{app/child.c}         & дочерний процесс \\
+\texttt{src/app/parent.c}     & родительский процесс \\
+\texttt{src/app/child.c}      & дочерний процесс \\
 \texttt{CMakeLists.txt}      & выбор реализации, сборка обоих исполняемых файлов \\
 \end{tabular}
 \end{center}

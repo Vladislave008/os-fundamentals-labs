@@ -6,44 +6,44 @@
     \texttt{./build-windows/bin/Release/parent.exe} из папки с \texttt{child.exe};
   \item Linux: \texttt{cmake -S . -B build-linux \&\& cmake --build build-linux}, запуск
     \texttt{./build-linux/bin/parent} из папки с \texttt{child};
-  \item файл с исходными текстами содержит папки \texttt{src}, \texttt{app} и корневой
+  \item файл с исходными текстами содержит папку \texttt{src} (в том числе \texttt{src/app}) и корневой
     \texttt{CMakeLists.txt}.
 \end{itemize}
 
 Единый интерфейс:
 
 \begin{center}
-\lstinputlisting[language=C,caption=src/os\_api.h,captionpos=b]{inc/os_api.h}
+\lstinputlisting[language=C,caption=src/os\_api.h,captionpos=b]{../src/os_api.h}
 \end{center}
 
 Реализация для Windows:
 
 \begin{center}
-\lstinputlisting[language=C,caption=src/os\_api\_win.c,captionpos=b]{inc/os_api_win.c}
+\lstinputlisting[language=C,caption=src/os\_api\_win.c,captionpos=b]{../src/os_api_win.c}
 \end{center}
 
 Реализация для Linux:
 
 \begin{center}
-\lstinputlisting[language=C,caption=src/os\_api\_posix.c,captionpos=b]{inc/os_api_posix.c}
+\lstinputlisting[language=C,caption=src/os\_api\_posix.c,captionpos=b]{../src/os_api_posix.c}
 \end{center}
 
 Родительский процесс:
 
 \begin{center}
-\lstinputlisting[language=C,caption=app/parent.c,captionpos=b]{inc/parent.c}
+\lstinputlisting[language=C,caption=src/app/parent.c,captionpos=b]{../src/app/parent.c}
 \end{center}
 
 Дочерний процесс:
 
 \begin{center}
-\lstinputlisting[language=C,caption=app/child.c,captionpos=b]{inc/child.c}
+\lstinputlisting[language=C,caption=src/app/child.c,captionpos=b]{../src/app/child.c}
 \end{center}
 
 Файл сборки:
 
 \begin{center}
-\lstinputlisting[language=C,caption=CMakeLists.txt,captionpos=b]{inc/CMakeLists.txt}
+\lstinputlisting[language=C,caption=CMakeLists.txt,captionpos=b]{../CMakeLists.txt}
 \end{center}
 
 Ниже приведены ключевые системные вызовы родительского процесса под Linux (полная трасса ---

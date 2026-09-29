@@ -19,21 +19,23 @@
 
 ```
 lab_2/
-├── CMakeLists.txt            # выбор реализации API, сборка parent и child
-├── README.md                 # этот файл
-├── run.md                    # команды сборки и запуска
-├── src/                      # кроссплатформенный интерфейс и его реализации
-│   ├── os_api.h              #   единый API (типы os_pipe, os_process)
-│   ├── os_api_win.c          #   реализация для Windows (Win32 API)
-│   └── os_api_posix.c        #   реализация для Linux/Unix (POSIX API)
-├── app/                      # прикладной уровень (без системных вызовов)
-│   ├── parent.c              #   родительский процесс
-│   └── child.c               #   дочерний процесс
-├── docs/
-│   └── report/               # отчёт по работе (LaTeX)
+├── CMakeLists.txt              # выбор реализации API, сборка parent и child
+├── README.md                   # этот файл
+├── run.md                      # команды сборки и запуска
+├── src/                        # исходный код
+│   ├── os_api.h                #   единый API (типы os_pipe, os_process)
+│   ├── os_api_win.c            #   реализация для Windows (Win32 API)
+│   ├── os_api_posix.c          #   реализация для Linux/Unix (POSIX API)
+│   └── app/                    #   прикладной уровень (без системных вызовов)
+│       ├── parent.c            #       родительский процесс
+│       └── child.c             #       дочерний процесс
+├── report/                     # отчёт по работе (LaTeX)
+│   ├── task/                   #   файлы задания (pdf, pptx, docx)
+│   ├── src/ styles/ img/       #   секции отчёта, стиль, скриншоты
+│   └── report.tex              #   главный файл отчёта (XeLaTeX)
 └── build-windows | build-linux # каталоги сборки (игнорируются git)
 ```
 
 ## Сборка и запуск
 
-Команды и пути к бинарникам — в `run.md`. Отчёт в формате LaTeX собирается из `docs/report/`.
+Команды и пути к бинарникам — в `run.md`. Отчёт в формате LaTeX собирается из `report/` (XeLaTeX).
