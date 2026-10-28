@@ -1,0 +1,76 @@
+\section{Исходная программа}
+
+Сборка и запуск:
+\begin{itemize}
+  \item Linux: \texttt{cmake -S . -B build-linux \&\& cmake --build build-linux}, запуск
+    \texttt{./build-linux/bin/lab3} (полные варианты команд --- в \texttt{run.md});
+  \item пример исследования: \texttt{./lab3 --random --rows 2048 --cols 2048 --iters 10
+    --bench 16 --repeat 5 --check};
+  \item пример обычного прогона: \texttt{./lab3 --manual --threads 4 --window 3 --iters 5}.
+\end{itemize}
+
+Вычислительное ядро:
+
+\begin{center}
+\lstinputlisting[language=C,caption=src/matrix\_filter.h,captionpos=b]{../src/matrix_filter.h}
+\end{center}
+
+\begin{center}
+\lstinputlisting[language=C,caption=src/matrix\_filter.c,captionpos=b]{../src/matrix_filter.c}
+\end{center}
+
+\begin{center}
+\lstinputlisting[language=C,caption=src/qsort.h,captionpos=b]{../src/qsort.h}
+\end{center}
+
+\begin{center}
+\lstinputlisting[language=C,caption=src/qsort.c,captionpos=b]{../src/qsort.c}
+\end{center}
+
+Пул потоков и синхронизация:
+
+\begin{center}
+\lstinputlisting[language=C,caption=src/pool.h,captionpos=b]{../src/pool.h}
+\end{center}
+
+\begin{center}
+\lstinputlisting[language=C,caption=src/pool.c,captionpos=b]{../src/pool.c}
+\end{center}
+
+Ввод/вывод и утилиты:
+
+\begin{center}
+\lstinputlisting[language=C,caption=src/matrix\_io.h,captionpos=b]{../src/matrix_io.h}
+\end{center}
+
+\begin{center}
+\lstinputlisting[language=C,caption=src/matrix\_io.c,captionpos=b]{../src/matrix_io.c}
+\end{center}
+
+\begin{center}
+\lstinputlisting[language=C,caption=src/util.h,captionpos=b]{../src/util.h}
+\end{center}
+
+\begin{center}
+\lstinputlisting[language=C,caption=src/util.c,captionpos=b]{../src/util.c}
+\end{center}
+
+Измерения:
+
+\begin{center}
+\lstinputlisting[language=C,caption=src/bench.h,captionpos=b]{../src/bench.h}
+\end{center}
+
+\begin{center}
+\lstinputlisting[language=C,caption=src/bench.c,captionpos=b]{../src/bench.c}
+\end{center}
+
+Прикладной уровень и файл сборки:
+
+\begin{center}
+\lstinputlisting[language=C,caption=src/app/main.c,captionpos=b]{../src/app/main.c}
+\end{center}
+
+\begin{center}
+\lstinputlisting[language=C,caption=CMakeLists.txt,captionpos=b]{../CMakeLists.txt}
+\end{center}
