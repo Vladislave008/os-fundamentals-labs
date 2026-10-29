@@ -6,12 +6,13 @@
 
 #define POOL_MAX_THREADS 1024u
 
-typedef struct {
-    int *src;                  /* исходная матрица, не изменяется */
-    int *dst;                  /* после прогона хранит результат */
+typedef struct
+{
+    int *src;
+    int *dst;
 
-    int *a;                    /* рабочий буфер: на итерации один читается, другой пишется */
-    int *b;                    /* второй рабочий буфер */
+    int *a;
+    int *b;
 
     size_t rows;
     size_t cols;
@@ -20,11 +21,11 @@ typedef struct {
     size_t block_rows;
     size_t total_blocks;
 
-    pthread_mutex_t mutex;     /* защищает очередь блоков и общие счётчики */
-    pthread_barrier_t barrier; /* границы итераций */
+    pthread_mutex_t mutex;
+    pthread_barrier_t barrier;
 
-    size_t next_block;          /* взятых блоков за прогон, сквозной счёт */
-    double elapsed;            /* время прогона в секундах, заполняется filter_run */
+    size_t next_block;
+    double elapsed;
 } filter_job;
 
 int filter_job_init(filter_job *job, int *src, int *dst, size_t rows, size_t cols,
