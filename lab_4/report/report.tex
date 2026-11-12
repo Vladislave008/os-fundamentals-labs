@@ -1,0 +1,39 @@
+\documentclass[12pt,a4paper,oneside]{article}
+
+\usepackage{fontspec}
+\usepackage[russian]{babel}
+\usepackage[a4paper,margin=2.54cm]{geometry}
+\usepackage{xcolor}
+\usepackage{listings}
+
+\defaultfontfeatures{Ligatures=TeX}
+\setmainfont{Times New Roman}
+\setmonofont{Courier New}
+\pagestyle{empty}
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+\frenchspacing
+
+\lstset{
+  basicstyle=\footnotesize\ttfamily,
+  numbers=left,
+  numberstyle=\scriptsize,
+  xleftmargin=2em,
+  frame=L,
+  aboveskip=4pt,
+  belowskip=4pt,
+  columns=fullflexible,
+  keepspaces=true,
+  breaklines=true,
+  showstringspaces=false,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{gray},
+  stringstyle=\color{blue},
+}
+
+\begin{document}
+\input{src/titlepage}
+\input{src/method}
+\input{src/listings}
+\end{document}
