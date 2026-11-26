@@ -1,0 +1,24 @@
+> .\program1.exe
+1 10 30
+6
+2 48 18
+6
+1 1 1
+0
+
+> .\program2.exe
+1 10 30
+6
+2 48 18
+6
+0
+Implementation 2 active.
+1 10 30
+6
+2 48 18
+6
+0
+Implementation 1 active.
+
+program1.exe imports (lab DLLs): libimpl1.dll
+program2.exe imports (lab DLLs): none
